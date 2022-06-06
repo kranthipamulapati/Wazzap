@@ -3,7 +3,7 @@
  * kranthipamulapati.com
  */
 
-import * as React from "react";
+import React, {memo} from "react";
 import {StyleSheet} from "react-native";
 
 import {Appbar} from "react-native-paper";

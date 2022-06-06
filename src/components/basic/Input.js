@@ -17,24 +17,60 @@
  *  keyboardType
  */
 
-import React from "react";
+import React, {memo} from "react";
 import {StyleSheet} from "react-native";
 
 import {TextInput} from "react-native-paper";
 
-const Input = ({style = {}, ...rest}) => {
+import {theme} from "src/utils/utils";
+
+const Input = ({
+        leftNode, 
+        rightNode,
+        style     = {},
+        NOL       = 1, 
+        maxLength = 20,
+        error     = false, 
+        disabled  = false, 
+        multiline = false, 
+        mandatory = false, 
+        onChange  = ()=>{},
+        ...rest
+    }) => {    
+
+    const renderNode = (node) => {
+        if(node.type === "icon") {
+            return <TextInput.Icon name={node.value} />
+        } else if(node.type === "text") {
+            return <TextInput.Affix text={node.value} />
+        }
+    };
 
     return (
-        <TextInput mode="outlined" style={{...styles.input, ...style}} {...rest} />
+        <>
+            <TextInput mode="outlined" style={{...styles.input, ...style}} {...rest}
+                dense
+                numberOfLines      = {NOL}
+                error              = {error}
+                disabled           = {disabled}
+                multiline          = {multiline}
+                maxLength          = {maxLength}
+                onChangeText       = {onChange}
+                outlineColor       = {mandatory ? "red" : "#cecece"}
+                activeOutlineColor = {mandatory ? "red" : theme.colors.primary}
+                {...(leftNode && {left : renderNode(leftNode)} )}
+                {...(rightNode && {right : renderNode(rightNode)} )}
+            />
+        </>
     );
 };
 
 const styles = StyleSheet.create({
     input : {
-        margin : 10,
         padding : 0,
         fontSize : 16,
+        marginVertical : "1.5%"
     }
 });
 
-export default Input;
+export default memo(Input);

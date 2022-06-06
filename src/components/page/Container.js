@@ -3,7 +3,7 @@
  * kranthipamulapati.com
  */
 
-import * as React from "react";
+import React, {memo} from "react";
 import {StyleSheet} from "react-native";
 
 import {Card} from "react-native-paper";
@@ -19,7 +19,9 @@ const Container = ({style = {}, children, ...rest}) => {
 
 const styles = StyleSheet.create({
     container : {
+        paddingLeft : "10%",
+        paddingRight : "10%",
     }
 });
 
-export default Container;
+export default memo(Container);
