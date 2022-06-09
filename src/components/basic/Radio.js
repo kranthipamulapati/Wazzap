@@ -3,15 +3,15 @@ import {View, StyleSheet} from "react-native";
 
 import RadioForm, {RadioButton, RadioButtonLabel, RadioButtonInput} from "react-native-simple-radio-button";
 
-import {theme, isPhone} from "src/utils/utils";
+import {theme, isPhone} from "../../global/utils";
 
-import Label from "./Label";
+import Text from "./Text";
 
 const Radio = ({label, initial, onPress, mandatory, radio_props, disabled = false}) => {
 
     return (
         <View>
-            {label && <Label mandatory={mandatory} text={label} />}
+            {label && <Text value={label} />}
 
             <View>
                 <RadioForm style={styles.radio} formHorizontal={isPhone ? false : true} animation={true}>

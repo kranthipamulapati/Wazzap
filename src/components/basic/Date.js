@@ -1,10 +1,10 @@
 import React, {memo, useState} from "react";
 
-import {getDate} from "src/utils/utils";
-
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 import Input from "./Input";
+
+import {getDate} from "../../global/utils";
 
 const DateInput = ({
         label = "Date",

@@ -14,6 +14,12 @@ const Toast = (message) => {
         hideOnPress : true,
         delay       : 0,
     });
-};  
+};
 
-export {width, height, isPhone, Toast};
+const theme = {
+    colors : {
+        primary : "violet"
+    }
+}
+
+export {theme, width, height, isPhone, Toast};

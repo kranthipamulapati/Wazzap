@@ -22,7 +22,7 @@ import {StyleSheet} from "react-native";
 
 import {TextInput} from "react-native-paper";
 
-import {theme} from "src/utils/utils";
+import {theme} from "../../global/utils";
 
 const Input = ({
         leftNode, 
@@ -58,8 +58,8 @@ const Input = ({
                 onChangeText       = {onChange}
                 outlineColor       = {mandatory ? "red" : "#cecece"}
                 activeOutlineColor = {mandatory ? "red" : theme.colors.primary}
-                {...(leftNode && {left : renderNode(leftNode)} )}
-                {...(rightNode && {right : renderNode(rightNode)} )}
+                {...(leftNode && {left : renderNode(leftNode)})}
+                {...(rightNode && {right : renderNode(rightNode)})}
             />
         </>
     );

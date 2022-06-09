@@ -25,8 +25,6 @@ const Home = ({navigation}) => {
             </Header>
 
             <Title>Home</Title>
-
-            <Footer></Footer>
         </Page>
     );
 };

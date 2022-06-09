@@ -66,17 +66,15 @@ const Login = ({navigation}) => {
         <Page>
             <Header></Header>
 
-                <Container style={styles.loginContainer}>
-                    
-                    <Input label={"Email"}    value={user.Email}    onChangeText={(text) => setUser({...user, ["Email"]    : text})} />
-                    <Input label={"Password"} value={user.Password} onChangeText={(text) => setUser({...user, ["Password"] : text})} secureTextEntry={true} />
+            <Container style={styles.loginContainer}>
                 
-                    <Button text={"Login"}    onPress={signIn} />
-                    <Button text={"Register"} onPress={signUp} />
-
-                </Container>
+                <Input label={"Email"}    value={user.Email}    onChangeText={(text) => setUser({...user, ["Email"]    : text})} />
+                <Input label={"Password"} value={user.Password} onChangeText={(text) => setUser({...user, ["Password"] : text})} secureTextEntry={true} />
             
-            <Footer></Footer>
+                <Button text={"Login"}    onPress={signIn} />
+                <Button text={"Register"} onPress={signUp} />
+
+            </Container>
         </Page>
     );
 };

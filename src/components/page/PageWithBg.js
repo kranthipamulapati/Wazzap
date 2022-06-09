@@ -3,9 +3,9 @@ import {View, StyleSheet, Dimensions, ImageBackground} from "react-native";
 
 import Orientation from "react-native-orientation-locker";
 
-import {isPhone} from "src/utils/utils";
+import {isPhone} from "../../global/utils";
 
-import Label from "../basic/Label";
+import Text from "../basic/Text";
 
 const PageWithBg = ({title, children, ...rest}) => {
     const initialRender = useRef(true);
@@ -30,7 +30,7 @@ const PageWithBg = ({title, children, ...rest}) => {
         <View style={styles.flex}>
             <ImageBackground source={(images[rest?.bg])} resizeMode="contain" resizeMethod="auto" imageStyle={styles.imageStyle} style={styles.flex} >
                 <View style={styles.dummy}></View>
-                {title ? <Label style={styles.title} text={title} /> : null}
+                {title ? <Text style={styles.title} value={title} /> : null}
                 {children}
             </ImageBackground>
         </View>
