@@ -2,7 +2,7 @@ import {createContext} from "react";
 
 import auth from "@react-native-firebase/auth";
 
-import {showToast} from "../global/utils";
+import {Toast} from "../global/utils";
 
 const AuthContext = createContext({
     user : {
@@ -13,21 +13,21 @@ const AuthContext = createContext({
         try {
             await auth.signInWithEmailAndPassword(email, password);
         } catch(e) {
-            showToast.show(JSON.stringify(e));
+            Toast(JSON.stringify(e));
         }
     },
     logout : async () => {
         try {
             await auth().signOut();
         } catch(e) {
-            showToast.show(JSON.stringify(e));
+            Toast(JSON.stringify(e));
         }
     },
     register : async (email, password) => {
         try {
             await auth.createUserWithEmailAndPassword(email, password);
         } catch(e) {
-            showToast.show(JSON.stringify(e));
+            Toast(JSON.stringify(e));
         }
     },
 });

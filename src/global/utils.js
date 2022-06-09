@@ -1,15 +1,14 @@
 import {Dimensions} from "react-native";
-
-import Toast from "react-native-root-toast";
-import {isTablet} from "react-native-device-info";
-
-const isPhone = !isTablet();
 const {width, height} = Dimensions.get("window");
 
-const showToast = (message) => {
-    Toast.show(message, {
-        duration    : Toast.durations.SHORT,
-        position    : Toast.positions.BOTTOM,
+import {isTablet} from "react-native-device-info";
+const isPhone = !isTablet();
+
+import {default as toast} from "react-native-root-toast";
+const Toast = (message) => {
+    toast.show(message, {
+        duration    : toast.durations.SHORT,
+        position    : toast.positions.BOTTOM,
         shadow      : true,
         animation   : true,
         hideOnPress : true,
@@ -17,4 +16,4 @@ const showToast = (message) => {
     });
 };  
 
-export {width, height, isPhone, showToast};
+export {width, height, isPhone, Toast};

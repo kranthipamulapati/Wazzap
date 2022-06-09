@@ -8,7 +8,7 @@ import {StyleSheet} from "react-native";
 
 import auth from "@react-native-firebase/auth";
 
-import {isPhone, showToast} from "../global/utils";
+import {isPhone, Toast} from "../global/utils";
 
 import Input from "../components/basic/Input";
 import Button from "../components/basic/Button";
@@ -35,7 +35,7 @@ const Login = ({navigation}) => {
         })
         .catch(error => {
 
-            showToast(error.message);
+            Toast(error.message);
 
         });
     }
@@ -45,13 +45,13 @@ const Login = ({navigation}) => {
         auth().createUserWithEmailAndPassword(user.Email, user.Password)
         .then((userCredentials) => {
 
-            showToast("Sign up success");
+            Toast("Sign up success");
             navigation.navigate("Home");
 
         })
         .catch(error => {
 
-            showToast(error.message);
+            Toast(error.message);
 
         });
     }

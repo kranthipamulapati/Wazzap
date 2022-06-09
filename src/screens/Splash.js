@@ -16,7 +16,6 @@ import {AuthContext} from "../global/context";
 const Splash = ({navigation}) => {
 
     const value = useContext(AuthContext);
-    console.log(value);
 
     useEffect(function() {
 

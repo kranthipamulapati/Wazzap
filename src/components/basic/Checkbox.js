@@ -3,7 +3,7 @@ import {View, StyleSheet} from "react-native"
 
 import CheckBox from "@react-native-community/checkbox";
 
-import Label from "src/components/basic/Label";
+import Text from "src/components/basic/Text";
 
 const Checkbox = ({
         label = "",
@@ -17,7 +17,7 @@ const Checkbox = ({
     return (
         <View style={{...styles.container, ...style}} {...rest}>
             <CheckBox value={value} disabled={disabled} onValueChange={onChange} style={styles.checkbox} />
-            <Label text={label} />
+            <Text value={label} />
         </View>
     )
 }

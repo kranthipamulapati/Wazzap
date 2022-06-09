@@ -1,9 +1,9 @@
 import React, {memo} from "react";
 import {Text, StyleSheet} from "react-native";
 
-const Label = ({text, style, mandatory}) => {
+const Label = ({text, style}) => {
     return (
-        <Text style={{...styles.text, ...style}}>{mandatory ? "*" : ""}{text}</Text>
+        <Text style={{...styles.text, ...style}}>{text}</Text>
     );
 };
 
