@@ -3,62 +3,55 @@
  * kranthipamulapati.com
  */
 
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useContext} from "react";
 import {StyleSheet} from "react-native";
 
 import auth from "@react-native-firebase/auth";
-
-import {isPhone, Toast} from "../global/utils";
 
 import Input from "../components/basic/Input";
 import Button from "../components/basic/Button";
 
 import Page from "../components/page/Page";
 import Header from "../components/page/Header";
-import Footer from "../components/page/Footer";
 import Container from "../components/page/Container";
 
-const Login = ({navigation}) => {
+import {Toast, isPhone} from "../global/utils";
+import {GlobalContext} from "../global/context";
 
-    const [user, setUser] = useState({
-        Email    : "",
-        Password : "",
-    });
+const Login = ({navigation}) => {
+    const {user, setUser} = useContext(GlobalContext);
 
     const signIn = () => {
-
-        auth().signInWithEmailAndPassword(user.Email, user.Password)
-        .then((userCredentials) => {
-
+        auth().signInWithEmailAndPassword(user.Email, user.Password).then((userCredentials) => {
+            
+            setUser({...user, ["Info"] : userCredentials});
             navigation.navigate("Home");
 
-        })
-        .catch(error => {
-
+        }).catch(error => {
             Toast(error.message);
-
         });
     }
 
     const signUp = () => {
-        
-        auth().createUserWithEmailAndPassword(user.Email, user.Password)
-        .then((userCredentials) => {
-
+        auth().createUserWithEmailAndPassword(user.Email, user.Password).then((userCredentials) => {
+            
             Toast("Sign up success");
+            setUser({...user, ["Info"] : userCredentials});
             navigation.navigate("Home");
 
-        })
-        .catch(error => {
-
+        }).catch(error => {
             Toast(error.message);
-
         });
     }
 
     useEffect(() => {
         auth().onAuthStateChanged((User) => {
-            if(User) navigation.navigate("Home");
+            
+            if(User) {
+                setUser({...user, ["Info"] : User});
+                navigation.navigate("Home");
+            }
+            
         });
     }, []);
 
@@ -68,8 +61,8 @@ const Login = ({navigation}) => {
 
             <Container style={styles.loginContainer}>
                 
-                <Input label={"Email"}    value={user.Email}    onChangeText={(text) => setUser({...user, ["Email"]    : text})} />
-                <Input label={"Password"} value={user.Password} onChangeText={(text) => setUser({...user, ["Password"] : text})} secureTextEntry={true} />
+                <Input label={"Email"}    value={user.Email}    onChange={(text) => setUser({...user, ["Email"]    : text})} />
+                <Input label={"Password"} value={user.Password} onChange={(text) => setUser({...user, ["Password"] : text})} secureTextEntry={true} />
             
                 <Button text={"Login"}    onPress={signIn} />
                 <Button text={"Register"} onPress={signUp} />

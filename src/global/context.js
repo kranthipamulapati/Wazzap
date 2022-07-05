@@ -1,35 +1,24 @@
-import {createContext} from "react";
+import React, {useState, createContext} from "react";
 
-import auth from "@react-native-firebase/auth";
+const GlobalContext = createContext();
 
-import {Toast} from "../global/utils";
+const initialState = {
+    Email: "",
+    Password: "",
+    Info : {}
+};
 
-const AuthContext = createContext({
-    user : {
-        Email : "",
-        Password : ""
-    },
-    login : async (email, password) => {
-        try {
-            await auth.signInWithEmailAndPassword(email, password);
-        } catch(e) {
-            Toast(JSON.stringify(e));
-        }
-    },
-    logout : async () => {
-        try {
-            await auth().signOut();
-        } catch(e) {
-            Toast(JSON.stringify(e));
-        }
-    },
-    register : async (email, password) => {
-        try {
-            await auth.createUserWithEmailAndPassword(email, password);
-        } catch(e) {
-            Toast(JSON.stringify(e));
-        }
-    },
-});
+const ContextProvider = ({children}) => {
 
-export {AuthContext};
+    const [user, setUser] = useState(initialState);
+    const value =  {
+        user,
+        setUser
+    };
+
+    return <GlobalContext.Provider value={value}>
+        {children}
+    </GlobalContext.Provider>
+}
+
+export {initialState, GlobalContext, ContextProvider};

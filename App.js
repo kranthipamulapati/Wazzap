@@ -14,7 +14,7 @@ import Home from "./src/screens/Home";
 import Login from "./src/screens/Login";
 import Splash from "./src/screens/Splash";
 
-import {AuthContext} from "./src/global/context";
+import {ContextProvider} from "./src/global/context";
 
 const App = () => {
     const Stack = createNativeStackNavigator();
@@ -30,9 +30,9 @@ const App = () => {
 
     return (
         <RootSiblingParent>
-            <NavigationContainer>
-
-                <AuthContext.Provider value={user}>
+            <ContextProvider>
+                
+                <NavigationContainer>
                     <Stack.Navigator initialRouteName="Splash" screenOptions={screenOptions}>
                         
                         <Stack.Screen name="Splash" component={Splash} />
@@ -40,9 +40,9 @@ const App = () => {
                         <Stack.Screen name="Home"   component={Home}   />
 
                     </Stack.Navigator>
-                </AuthContext.Provider>
-                
-            </NavigationContainer>
+                </NavigationContainer>
+
+            </ContextProvider>
         </RootSiblingParent>
     );
 };

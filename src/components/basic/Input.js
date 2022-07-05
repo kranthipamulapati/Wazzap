@@ -29,7 +29,7 @@ const Input = ({
         rightNode,
         style     = {},
         NOL       = 1, 
-        maxLength = 20,
+        maxLength = 50,
         error     = false, 
         disabled  = false, 
         multiline = false, 
