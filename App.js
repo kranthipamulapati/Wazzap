@@ -3,7 +3,7 @@
  * kranthipamulapati.com
  */
 
-import React, {useState} from "react";
+import React from "react";
 
 import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
@@ -22,11 +22,6 @@ const App = () => {
     let screenOptions = {
         headerShown : false
     };
-
-    const [user, setUser] = useState({
-        Email    : "",
-        Password : "",
-    });
 
     return (
         <RootSiblingParent>

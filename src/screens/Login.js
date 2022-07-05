@@ -3,7 +3,7 @@
  * kranthipamulapati.com
  */
 
-import React, {useEffect, useContext} from "react";
+import React, {useContext} from "react";
 import {StyleSheet} from "react-native";
 
 import auth from "@react-native-firebase/auth";
@@ -43,17 +43,6 @@ const Login = ({navigation}) => {
             Toast(error.message);
         });
     }
-
-    useEffect(() => {
-        auth().onAuthStateChanged((User) => {
-            
-            if(User) {
-                setUser({...user, ["Info"] : User});
-                navigation.navigate("Home");
-            }
-            
-        });
-    }, []);
 
     return (
         <Page>

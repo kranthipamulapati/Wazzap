@@ -3,24 +3,37 @@
  * kranthipamulapati.com
  */
 
-import React, {useEffect} from "react";
+import React, {useEffect, useContext} from "react";
 import {StyleSheet} from "react-native";
 
-import Page from "../components/page/Page";
-import Header from "../components/page/Header";
+import auth from "@react-native-firebase/auth";
 
-import Title from "../components/basic/Title";
+import Page from "../components/page/Page";
+
+import Image from "../components/basic/Image";
+
+import {initialState, GlobalContext} from "../global/context";
 
 const Splash = ({navigation}) => {
+    const {user, setUser} = useContext(GlobalContext);
 
-    useEffect(function() {
-        navigation.navigate("Login");
+    useEffect(() => {
+        auth().onAuthStateChanged((User) => {
+            
+            if(User) {
+                setUser({...user, ["Info"] : User});
+                //navigation.navigate("Home");
+            } else {
+                setUser(initialState);
+                //navigation.navigate("Login");
+            } 
+            
+        });
     }, []);
 
     return (
         <Page style={styles.center}>
-            <Header></Header>
-            <Title text={"Wazzap"} />
+            <Image />
         </Page>
     );
 };
