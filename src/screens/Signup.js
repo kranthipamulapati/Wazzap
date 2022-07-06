@@ -4,18 +4,17 @@
  */
 
 import React, {useState} from "react";
-import {StyleSheet} from "react-native";
+import {View, StyleSheet, ImageBackground} from "react-native";
 
 import auth from "@react-native-firebase/auth";
 
+import Text from "../components/basic/Text";
 import Input from "../components/basic/Input";
 import Button from "../components/basic/Button";
 
 import Page from "../components/page/Page";
-import Header from "../components/page/Header";
-import Container from "../components/page/Container";
 
-import {Toast, isPhone} from "../global/utils";
+import {Toast, theme, isPhone} from "../global/utils";
 
 const Signup = ({navigation}) => {
 
@@ -56,26 +55,40 @@ const Signup = ({navigation}) => {
     };
 
     return (
-        <Page>
-            <Header></Header>
+        <Page style={styles.page}>
+            <Text style={styles.title} value={"Welcome to Wazzap"}/>
 
-            <Container style={styles.signupContainer}>
-                
+            <ImageBackground source={require("../assets/welcome-img.png")} resizeMode="contain" style={styles.image}></ImageBackground>
+
+            <View style={styles.signupWrapper}>
                 <Input label={"Email"} value={user.Email} onChange={(text) => setUser({...user, ["Email"] : text})} />
                 <Input label={"Choose Password"}  value={user.choosePassword}  onChange={(text) => setUser({...user, ["choosePassword"] : text})}  secureTextEntry={true} />
                 <Input label={"Confirm Password"} value={user.confirmPassword} onChange={(text) => setUser({...user, ["confirmPassword"] : text})} secureTextEntry={true} />
-            
-                <Button text={"Sign Up"} onPress={signUp} />
 
-            </Container>
+                <Button text={"Sign Up"} onPress={signUp} />
+            </View>
+            
         </Page>
     );
 };
  
 const styles = StyleSheet.create({
-    signupContainer : {
-        marginLeft : isPhone ? "0%" : "35%", 
-        marginRight : isPhone ? "0%" : "35%"
+    title : {
+        flex : 1,
+        fontSize: 30,
+        alignSelf: "center",
+        color: theme.colors.primary,
+        textAlignVertical: "center"
+    },
+    image : {
+        flex : 1.5,
+    },
+    signupWrapper : {
+        flex : 2,
+        justifyContent: "center"
+    },
+    page : {
+        paddingHorizontal : isPhone ? "10%" : "35%",
     }
 });
  

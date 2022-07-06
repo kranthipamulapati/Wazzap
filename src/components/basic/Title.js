@@ -9,7 +9,7 @@ import {Text, StyleSheet} from "react-native";
 const Title = ({text, style}) => {
 
     return (
-        <Text style={{...style, ...styles.title}}>{text}</Text>
+        <Text style={{...styles.title, ...style}}>{text}</Text>
     );
 };
 

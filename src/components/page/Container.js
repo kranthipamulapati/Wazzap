@@ -11,7 +11,7 @@ import {Card} from "react-native-paper";
 const Container = ({style = {}, children, ...rest}) => {
 
     return (
-        <Card style={{...style, ...styles.container}}>
+        <Card style={{...styles.container, ...style}}>
             {children}
         </Card>
     );

@@ -33,7 +33,7 @@ const Splash = ({navigation}) => {
 
     return (
         <Page style={styles.center}>
-            <Image source={require("../assets/welcome-img.png")} />
+            <Image source={require("../assets/Android/icons8-whatsapp-192.png")} />
         </Page>
     );
 };

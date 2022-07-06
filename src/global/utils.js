@@ -17,13 +17,24 @@ const Toast = (message) => {
 };
 
 import {DefaultTheme} from "react-native-paper";
+
+const palette = {
+    red           : "#f13a59",
+    white         : "#ffffff",
+    tealGreen     : "#25d366",
+    tealGreenDark : "#075e54",
+};
+
 const theme = {
     ...DefaultTheme,
     colors : {
         ...DefaultTheme.colors,
-        primary : "#65b42e",
-        secondary : "#414757",
-        error : "#f13a59",
+
+        primary: palette.tealGreen,
+        secondary: palette.tealGreenDark,
+
+        white: palette.white,
+        error : palette.red,
     },
 }
 
