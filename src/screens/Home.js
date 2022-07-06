@@ -24,7 +24,7 @@ const Home = ({navigation}) => {
 
             setUser(initialState);
             Toast("Logout successful");
-            navigation.navigate("Login");
+            navigation.navigate("Signin");
             
         });
     }

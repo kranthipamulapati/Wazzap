@@ -22,10 +22,10 @@ const Splash = ({navigation}) => {
             
             if(User) {
                 setUser({...user, ["Info"] : User});
-                //navigation.navigate("Home");
+                navigation.navigate("Home");
             } else {
                 setUser(initialState);
-                //navigation.navigate("Login");
+                navigation.navigate("Signin");
             } 
             
         });
@@ -33,7 +33,7 @@ const Splash = ({navigation}) => {
 
     return (
         <Page style={styles.center}>
-            <Image />
+            <Image source={require("../assets/welcome-img.png")} />
         </Page>
     );
 };

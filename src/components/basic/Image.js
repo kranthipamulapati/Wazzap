@@ -10,10 +10,10 @@
 import React from "react";
 import {Image as RNImage, StyleSheet} from "react-native";
 
-const Image = ({src}) => {
+const Image = ({source}) => {
 
     return (
-        <RNImage style={styles.img} source={require("../../assets/welcome-img.png")} />
+        <RNImage resizeMode="center" style={styles.img} source={source} />
     );
 };
 

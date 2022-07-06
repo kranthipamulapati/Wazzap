@@ -16,10 +16,15 @@ const Toast = (message) => {
     });
 };
 
+import {DefaultTheme} from "react-native-paper";
 const theme = {
+    ...DefaultTheme,
     colors : {
-        primary : "violet"
-    }
+        ...DefaultTheme.colors,
+        primary : "#65b42e",
+        secondary : "#414757",
+        error : "#f13a59",
+    },
 }
 
 export {theme, width, height, isPhone, Toast};

@@ -5,8 +5,6 @@
 
 import React from "react";
 import {StyleSheet, SafeAreaView} from "react-native";
-
-import {isPhone} from "../../global/utils";
  
 const Page = ({style, children}) => {
 
@@ -20,8 +18,7 @@ const Page = ({style, children}) => {
 const styles = StyleSheet.create({
     page : {
         flex : 1,
-        paddingLeft : isPhone ? "7.5%" : "2.5%",
-        paddingRight : isPhone ? "7.5%" : "2.5%",
+        backgroundColor: "#fff"
     }
 });
  
