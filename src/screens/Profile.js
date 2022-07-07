@@ -7,6 +7,8 @@ import React, {useState} from "react";
 import {View, StyleSheet, Pressable, ImageBackground} from "react-native";
 
 import auth from "@react-native-firebase/auth";
+import storage from "@react-native-firebase/storage";
+
 import Icon from "react-native-vector-icons/FontAwesome5";
 import {launchCamera} from "react-native-image-picker";
 
@@ -35,10 +37,29 @@ const Profile = ({navigation}) => {
                 Toast(response.errorMessage);
 
             } else {
-                let flag = await uploadImage(response.assets[0].uri, "images/profilepictures");
+                let task = await uploadImage(response.assets[0].uri, "images/profilepictures");
 
-                if(flag === false) setProfilePicture(require("../assets/welcome-img.png"));
-                else if(flag === true) setProfilePicture({uri : response.assets[0].uri});
+                if(task.state === "success") {
+
+                    storage().ref(task.fileName).getDownloadURL().then((url) => {
+
+                        console.log(url);
+                        setProfilePicture({uri : url});
+
+                    }).catch((e) => {
+
+                        setProfilePicture({uri : response.assets[0].uri});
+
+                    });
+
+                    Toast("Profile picture updated!");
+
+                } else {
+
+                    setProfilePicture(require("../assets/welcome-img.png"));
+                    Toast("Uploading profile picture failed.");
+
+                } 
             }
         }
 

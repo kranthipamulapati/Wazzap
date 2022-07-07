@@ -20,14 +20,18 @@ const Signup = ({navigation}) => {
 
     const [user, setUser] = useState({
         Email : "",
-        choosePassword  : "",
-        confirmPassword : ""
+        Name  : "",
+        Password : ""
     });
 
     const signUp = () => {
         if(checkForm()) {
 
-            auth().createUserWithEmailAndPassword(user.Email, user.choosePassword).then((userCredentials) => {
+            auth().createUserWithEmailAndPassword(user.Email, user.Password).then((userCredentials) => {
+
+                auth().currentUser.updateProfile({
+                    displayName : user.Name
+                });
             
                 Toast("Sign up success");
                 navigation.navigate("Signin");
@@ -41,15 +45,10 @@ const Signup = ({navigation}) => {
 
     const checkForm = () => {
 
-        if(user.Email === "" || user.choosePassword === "" || user.confirmPassword === "") {
-            Toast("Email or password can not be empty");
+        if(user.Email === "" || user.Name === "" || user.Password === "") {
+            Toast("Please enter all the details.");
             return false;
         }
-
-        if(user.choosePassword !== user.confirmPassword) {
-            Toast("Passwords do not match");
-            return false;
-        } 
 
         return true;
     };
@@ -61,9 +60,9 @@ const Signup = ({navigation}) => {
             <ImageBackground source={require("../assets/welcome-img.png")} resizeMode="contain" style={styles.image}></ImageBackground>
 
             <View style={styles.signupWrapper}>
-                <Input label={"Email"} value={user.Email} onChange={(text) => setUser({...user, ["Email"] : text})} />
-                <Input label={"Choose Password"}  value={user.choosePassword}  onChange={(text) => setUser({...user, ["choosePassword"] : text})}  secureTextEntry={true} />
-                <Input label={"Confirm Password"} value={user.confirmPassword} onChange={(text) => setUser({...user, ["confirmPassword"] : text})} secureTextEntry={true} />
+                <Input label={"Email"}    value={user.Email}    onChange={(text) => setUser({...user, ["Email"]    : text})} />
+                <Input label={"Name"}     value={user.Name}     onChange={(text) => setUser({...user, ["Name"]     : text})} />
+                <Input label={"Password"} value={user.Password} onChange={(text) => setUser({...user, ["Password"] : text})} secureTextEntry={true} />
 
                 <Button text={"Sign Up"} onPress={signUp} />
             </View>
