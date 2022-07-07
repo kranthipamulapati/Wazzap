@@ -3,26 +3,20 @@
  * kranthipamulapati.com
  */
 
-import React, {useContext} from "react";
+import React from "react";
 
 import auth from "@react-native-firebase/auth";
 
 import Page from "../components/page/Page";
-import Header from "../components/page/Header";
-
-import Title from "../components/basic/Title";
-import Button from "../components/basic/Button";
 
 import {Toast} from "../global/utils";
-import {initialState, GlobalContext} from "../global/context";
 
 const Home = ({navigation}) => {
-    const {user, setUser} = useContext(GlobalContext);
+    const user = auth().currentUser;
 
     const Logout = () => {
         auth().signOut().then(() => {
 
-            setUser(initialState);
             Toast("Logout successful");
             navigation.navigate("Signin");
             
@@ -31,11 +25,6 @@ const Home = ({navigation}) => {
 
     return (
         <Page>
-            <Header>
-                <Button text={"Logout"} onPress={Logout} />
-            </Header>
-
-            <Title>Home</Title>
         </Page>
     );
 };

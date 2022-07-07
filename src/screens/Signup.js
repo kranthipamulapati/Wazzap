@@ -14,12 +14,18 @@ import Button from "../components/basic/Button";
 
 import Page from "../components/page/Page";
 
-import {Toast, theme, isPhone} from "../global/utils";
+import {theme, Toast, isPhone} from "../global/utils";
 
 const Signup = ({navigation}) => {
 
+    const [user, setUser] = useState({
+        Email : "",
+        choosePassword  : "",
+        confirmPassword : ""
+    });
+
     const signUp = () => {
-        if(checkPassword()) {
+        if(checkForm()) {
 
             auth().createUserWithEmailAndPassword(user.Email, user.choosePassword).then((userCredentials) => {
             
@@ -33,16 +39,10 @@ const Signup = ({navigation}) => {
         }
     }
 
-    const [user, setUser] = useState({
-        Email : "",
-        choosePassword  : "",
-        confirmPassword : ""
-    });
+    const checkForm = () => {
 
-    const checkPassword = () => {
-
-        if(user.choosePassword !== "") {
-            Toast("Please can not be empty");
+        if(user.Email === "" || user.choosePassword === "" || user.confirmPassword === "") {
+            Toast("Email or password can not be empty");
             return false;
         }
 

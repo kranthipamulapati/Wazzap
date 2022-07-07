@@ -3,7 +3,7 @@
  * kranthipamulapati.com
  */
 
-import React, {useContext} from "react";
+import React, {useState} from "react";
 import {View, Pressable, StyleSheet, ImageBackground} from "react-native";
 
 import auth from "@react-native-firebase/auth";
@@ -14,16 +14,18 @@ import Button from "../components/basic/Button";
 
 import Page from "../components/page/Page";
 
-import {GlobalContext} from "../global/context";
 import {theme, Toast, isPhone} from "../global/utils";
 
 const Signin = ({navigation}) => {
-    const {user, setUser} = useContext(GlobalContext);
+
+    const [user, setUser] = useState({
+        Email : "",
+        Password : ""
+    });
 
     const signIn = () => {
         auth().signInWithEmailAndPassword(user.Email, user.Password).then((userCredentials) => {
             
-            setUser({...user, ["Info"] : userCredentials});
             navigation.navigate("Home");
 
         }).catch(error => {

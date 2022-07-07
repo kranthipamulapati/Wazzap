@@ -14,14 +14,20 @@ import Home from "./src/screens/Home";
 import Signin from "./src/screens/Signin";
 import Signup from "./src/screens/Signup";
 import Splash from "./src/screens/Splash";
+import Profile from "./src/screens/Profile";
 
 import {ContextProvider} from "./src/global/context";
+import { theme } from "./src/global/utils";
 
 const App = () => {
     const Stack = createNativeStackNavigator();
 
     let screenOptions = {
-        headerShown : false
+        headerShown : true,
+        headerStyle : {
+            backgroundColor : theme.colors.primary,
+        },
+        headerTintColor : theme.colors.white,
     };
 
     return (
@@ -31,10 +37,11 @@ const App = () => {
                 <NavigationContainer>
                     <Stack.Navigator initialRouteName="Splash" screenOptions={screenOptions}>
                         
-                        <Stack.Screen name="Splash" component={Splash} />
-                        <Stack.Screen name="Signin" component={Signin} />
-                        <Stack.Screen name="Signup" component={Signup} />
-                        <Stack.Screen name="Home"   component={Home}   />
+                        <Stack.Screen name="Splash"  component={Splash}  options={{headerShown : false}} />
+                        <Stack.Screen name="Signin"  component={Signin}  options={{headerShown : false}} />
+                        <Stack.Screen name="Signup"  component={Signup}  options={{headerShown : false}} />
+                        <Stack.Screen name="Home"    component={Home}    options={{title : "Wazzap", headerBackVisible : false}} />
+                        <Stack.Screen name="Profile" component={Profile} options={{title : "Profile"}}   />
 
                     </Stack.Navigator>
                 </NavigationContainer>

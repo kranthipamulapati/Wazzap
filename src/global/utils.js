@@ -17,7 +17,6 @@ const Toast = (message) => {
 };
 
 import {DefaultTheme} from "react-native-paper";
-
 const palette = {
     red           : "#f13a59",
     white         : "#ffffff",
@@ -35,7 +34,30 @@ const theme = {
 
         white: palette.white,
         error : palette.red,
-    },
-}
+    }
+};
 
-export {theme, width, height, isPhone, Toast};
+import storage from "@react-native-firebase/storage";
+async function uploadImage(uri, path) {
+    
+    const fileName = new Date().getTime();
+    const imageRef = storage().ref(`${path}/${fileName}.jpeg`);
+
+    try {
+        let task = await imageRef.putFile(uri);
+
+        if(task.state === "success") {
+            Toast("Profile picture updated!");
+            return true;
+        } else {
+            Toast("Uploading profile picture failed. Please check your internet connection & try again!");
+            return false;
+        } 
+
+    } catch (e) {
+        Toast(e.message);
+        return false;
+    }
+};
+
+export {theme, width, height, isPhone, Toast, uploadImage};
