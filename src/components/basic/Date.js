@@ -4,7 +4,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 
 import Input from "./Input";
 
-import {getDate} from "../../global/utils";
+import {getDate} from "../../utils/utils";
 
 const DateInput = ({
         label = "Date",

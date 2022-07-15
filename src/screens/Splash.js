@@ -3,28 +3,25 @@
  * kranthipamulapati.com
  */
 
-import React, {useEffect} from "react";
+import React, {useEffect, useContext} from "react";
 import {StyleSheet} from "react-native";
 
-import auth from "@react-native-firebase/auth";
-
 import Page from "../components/page/Page";
-
 import Image from "../components/basic/Image";
+
+import {UserContext} from "../context/userContext";
 
 const Splash = ({navigation}) => {
 
+    const User = useContext(UserContext);
+
     useEffect(() => {
-        auth().onAuthStateChanged((User) => {
-            
-            if(User) {
-                navigation.navigate("Profile");
-            } else {
-                navigation.navigate("Signin");
-            } 
-            
-        });
-    }, []);
+        if(User) {
+            navigation.navigate("Profile");
+        } else {
+            navigation.navigate("Signin");
+        } 
+    }, [User]);
 
     return (
         <Page style={styles.center}>

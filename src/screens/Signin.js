@@ -6,15 +6,13 @@
 import React, {useState} from "react";
 import {View, Pressable, StyleSheet, ImageBackground} from "react-native";
 
-import auth from "@react-native-firebase/auth";
-
+import Page from "../components/page/Page";
 import Text from "../components/basic/Text";
 import Input from "../components/basic/Input";
 import Button from "../components/basic/Button";
 
-import Page from "../components/page/Page";
-
-import {theme, Toast, isPhone} from "../global/utils";
+import {Auth} from "../utils/firebase";
+import {Toast, theme, isPhone} from "../utils/utils";
 
 const Signin = ({navigation}) => {
 
@@ -24,7 +22,7 @@ const Signin = ({navigation}) => {
     });
 
     const signIn = () => {
-        auth().signInWithEmailAndPassword(user.Email, user.Password).then((userCredentials) => {
+        Auth.signInWithEmailAndPassword(user.Email, user.Password).then((User) => {
             
             navigation.navigate("Home");
 

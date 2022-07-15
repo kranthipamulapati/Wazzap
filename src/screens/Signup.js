@@ -4,17 +4,15 @@
  */
 
 import React, {useState} from "react";
-import {View, StyleSheet, ImageBackground} from "react-native";
+import {View, Pressable, StyleSheet, ImageBackground} from "react-native";
 
-import auth from "@react-native-firebase/auth";
-
+import Page from "../components/page/Page";
 import Text from "../components/basic/Text";
 import Input from "../components/basic/Input";
 import Button from "../components/basic/Button";
 
-import Page from "../components/page/Page";
-
-import {theme, Toast, isPhone} from "../global/utils";
+import {Auth} from "../utils/firebase";
+import {Toast, theme, isPhone} from "../utils/utils";
 
 const Signup = ({navigation}) => {
 
@@ -27,9 +25,9 @@ const Signup = ({navigation}) => {
     const signUp = () => {
         if(checkForm()) {
 
-            auth().createUserWithEmailAndPassword(user.Email, user.Password).then((userCredentials) => {
+            Auth.createUserWithEmailAndPassword(user.Email, user.Password).then((User) => {
 
-                auth().currentUser.updateProfile({
+                User.updateProfile({
                     displayName : user.Name
                 });
             
@@ -65,6 +63,10 @@ const Signup = ({navigation}) => {
                 <Input label={"Password"} value={user.Password} onChange={(text) => setUser({...user, ["Password"] : text})} secureTextEntry={true} />
 
                 <Button text={"Sign Up"} onPress={signUp} />
+
+                <Pressable onPress={() => navigation.navigate("Signin")}>
+                    <Text style={styles.text} value={"Have an account? Sign in!"} />
+                </Pressable>
             </View>
             
         </Page>
@@ -81,6 +83,10 @@ const styles = StyleSheet.create({
     },
     image : {
         flex : 1.5,
+    },
+    text : {
+        color: "blue",
+        textAlign: "center"
     },
     signupWrapper : {
         flex : 2,

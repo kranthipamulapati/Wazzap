@@ -3,26 +3,26 @@
  * kranthipamulapati.com
  */
 
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import {View, StyleSheet, Pressable, ImageBackground} from "react-native";
 
-import auth from "@react-native-firebase/auth";
-import storage from "@react-native-firebase/storage";
-
-import Icon from "react-native-vector-icons/FontAwesome5";
 import {launchCamera} from "react-native-image-picker";
+import Icon from "react-native-vector-icons/FontAwesome5";
 
 import Page from "../components/page/Page";
-
 import Text from "../components/basic/Text";
 
-import {theme, Toast, isPhone, uploadImage} from "../global/utils";
+import {UserContext} from "../context/userContext";
+
+import {Toast, theme, isPhone} from "../utils/utils";
+import {Storage, uploadImage} from "../utils/firebase";
 
 const Profile = ({navigation}) => {
-    const user = auth().currentUser;
+    
+    const User = useContext(UserContext);
 
-    const [displayName, setDisplayName] = useState(user.displayName);
-    const [profilePicture, setProfilePicture] = useState(user.photoURL || require("../assets/welcome-img.png"));
+    const [displayName, setDisplayName] = useState(User.displayName);
+    const [profilePicture, setProfilePicture] = useState(User.photoURL || require("../assets/welcome-img.png"));
 
     const changeProfilePicture = () => {
 
@@ -41,9 +41,8 @@ const Profile = ({navigation}) => {
 
                 if(task.state === "success") {
 
-                    storage().ref(task.fileName).getDownloadURL().then((url) => {
+                    Storage.ref(task.fileName).getDownloadURL().then((url) => {
 
-                        console.log(url);
                         setProfilePicture({uri : url});
 
                     }).catch((e) => {
@@ -74,7 +73,6 @@ const Profile = ({navigation}) => {
     };
 
     const changeDisplayName = () => {
-
     };
 
     return (
@@ -96,7 +94,7 @@ const Profile = ({navigation}) => {
 
             <Pressable style={styles.contentWrapper}>
                 <Icon name={"envelope"} style={styles.icon} />
-                <Text value={user.email} />
+                <Text value={User.email} />
                 <View></View>
             </Pressable>
 

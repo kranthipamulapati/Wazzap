@@ -16,8 +16,7 @@ import Signup from "./src/screens/Signup";
 import Splash from "./src/screens/Splash";
 import Profile from "./src/screens/Profile";
 
-import {ContextProvider} from "./src/global/context";
-import { theme } from "./src/global/utils";
+import {theme} from "./src/utils/utils";
 
 const App = () => {
     const Stack = createNativeStackNavigator();
@@ -32,21 +31,19 @@ const App = () => {
 
     return (
         <RootSiblingParent>
-            <ContextProvider>
+            
+            <NavigationContainer>
+                <Stack.Navigator initialRouteName="Splash" screenOptions={screenOptions}>
+                    
+                    <Stack.Screen name="Splash"  component={Splash}  options={{headerShown : false}} />
+                    <Stack.Screen name="Signin"  component={Signin}  options={{headerShown : false}} />
+                    <Stack.Screen name="Signup"  component={Signup}  options={{headerShown : false}} />
+                    <Stack.Screen name="Home"    component={Home}    options={{title : "Wazzap", headerBackVisible : false}} />
+                    <Stack.Screen name="Profile" component={Profile} options={{title : "Profile"}}   />
 
-                <NavigationContainer>
-                    <Stack.Navigator initialRouteName="Splash" screenOptions={screenOptions}>
-                        
-                        <Stack.Screen name="Splash"  component={Splash}  options={{headerShown : false}} />
-                        <Stack.Screen name="Signin"  component={Signin}  options={{headerShown : false}} />
-                        <Stack.Screen name="Signup"  component={Signup}  options={{headerShown : false}} />
-                        <Stack.Screen name="Home"    component={Home}    options={{title : "Wazzap", headerBackVisible : false}} />
-                        <Stack.Screen name="Profile" component={Profile} options={{title : "Profile"}}   />
-
-                    </Stack.Navigator>
-                </NavigationContainer>
-
-            </ContextProvider>
+                </Stack.Navigator>
+            </NavigationContainer>
+            
         </RootSiblingParent>
     );
 };

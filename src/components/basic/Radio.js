@@ -3,7 +3,7 @@ import {View, StyleSheet} from "react-native";
 
 import RadioForm, {RadioButton, RadioButtonLabel, RadioButtonInput} from "react-native-simple-radio-button";
 
-import {theme, isPhone} from "../../global/utils";
+import {theme, isPhone} from "../../utils/utils";
 
 import Text from "./Text";
 
