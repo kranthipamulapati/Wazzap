@@ -12,17 +12,21 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 import Page from "../components/page/Page";
 import Text from "../components/basic/Text";
 
+import {theme} from "../themes/default";
+
 import {UserContext} from "../context/userContext";
 
-import {Toast, theme, isPhone} from "../utils/utils";
+import DisplayName from "../components/popups/displayName";
+
+import {Toast, isPhone} from "../utils/utils";
 import {Storage, uploadImage} from "../utils/firebase";
 
 const Profile = ({navigation}) => {
     
-    const User = useContext(UserContext);
+    const {user} = useContext(UserContext);
 
-    const [displayName, setDisplayName] = useState(User.displayName);
-    const [profilePicture, setProfilePicture] = useState(User.photoURL || require("../assets/welcome-img.png"));
+    const [showDisplayNameModal, setShowDisplayNameModal] = useState(false);
+    const [profilePicture, setProfilePicture] = useState(user.photoURL || require("../assets/welcome-img.png"));
 
     const changeProfilePicture = () => {
 
@@ -72,11 +76,22 @@ const Profile = ({navigation}) => {
         launchCamera(options, callback);
     };
 
-    const changeDisplayName = () => {
+    const hideDisplayNameModal = (flag, text) => {
+        setShowDisplayNameModal(false);
+
+        if(flag === true && text.length > 0) {
+            
+            user.updateProfile({
+                displayName : text
+            });
+
+        }
     };
 
     return (
         <Page style={styles.page}>
+
+            {showDisplayNameModal && <DisplayName text={user.displayName} hideDisplayNameModal={hideDisplayNameModal} />}
 
             <View style={styles.profilePictureWrapper}>
                 <ImageBackground resizeMode="cover" style={styles.profilePicture} source={profilePicture}/>
@@ -86,15 +101,15 @@ const Profile = ({navigation}) => {
                 </Pressable>
             </View>
             
-            <Pressable style={styles.contentWrapper} onPress={changeDisplayName}>
+            <Pressable style={styles.contentWrapper} onPress={() => setShowDisplayNameModal(true)}>
                 <Icon name={"user-alt"} style={styles.icon} />
-                <Text value={displayName} />
+                <Text value={user.displayName} />
                 <Icon name={"pen"} style={styles.icon} />
             </Pressable>
 
             <Pressable style={styles.contentWrapper}>
                 <Icon name={"envelope"} style={styles.icon} />
-                <Text value={User.email} />
+                <Text value={user.email} />
                 <View></View>
             </Pressable>
 

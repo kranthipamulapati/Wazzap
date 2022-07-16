@@ -3,7 +3,7 @@
  * kranthipamulapati.com
  */
 
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import {View, Pressable, StyleSheet, ImageBackground} from "react-native";
 
 import Page from "../components/page/Page";
@@ -11,20 +11,26 @@ import Text from "../components/basic/Text";
 import Input from "../components/basic/Input";
 import Button from "../components/basic/Button";
 
+import {theme} from "../themes/default";
+
 import {Auth} from "../utils/firebase";
-import {Toast, theme, isPhone} from "../utils/utils";
+import {Toast, isPhone} from "../utils/utils";
+
+import {UserContext} from "../context/userContext";
 
 const Signin = ({navigation}) => {
 
-    const [user, setUser] = useState({
-        Email : "",
-        Password : ""
-    });
+    const {setUser} = useContext(UserContext);
+
+    const [Email, setEmail] = useState("");
+    const [Password, setPassword] = useState("");
 
     const signIn = () => {
-        Auth.signInWithEmailAndPassword(user.Email, user.Password).then((User) => {
-            
-            navigation.navigate("Home");
+        if(Email.length === 0 || Password.length === 0) return false;
+
+        Auth.signInWithEmailAndPassword(Email, Password).then((userCredentials) => {
+
+            setUser(Auth.currentUser);
 
         }).catch(error => {
             Toast(error.message);
@@ -38,8 +44,8 @@ const Signin = ({navigation}) => {
             <ImageBackground source={require("../assets/welcome-img.png")} resizeMode="contain" style={styles.image}></ImageBackground>
 
             <View style={styles.signinWrapper}>
-                <Input style={styles.input} label={"Email"}    value={user.Email}    onChange={(text) => setUser({...user, ["Email"]    : text})} />
-                <Input style={styles.input} label={"Password"} value={user.Password} onChange={(text) => setUser({...user, ["Password"] : text})} secureTextEntry={true} />
+                <Input style={styles.input} label={"Email"}    value={Email}    onChange={setEmail} />
+                <Input style={styles.input} label={"Password"} value={Password} onChange={setPassword} secureTextEntry={true} />
             
                 <Button text={"Sign In"} onPress={signIn} />
 

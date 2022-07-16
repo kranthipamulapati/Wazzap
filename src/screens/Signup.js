@@ -3,7 +3,7 @@
  * kranthipamulapati.com
  */
 
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import {View, Pressable, StyleSheet, ImageBackground} from "react-native";
 
 import Page from "../components/page/Page";
@@ -11,45 +11,41 @@ import Text from "../components/basic/Text";
 import Input from "../components/basic/Input";
 import Button from "../components/basic/Button";
 
+import {theme} from "../themes/default";
+
 import {Auth} from "../utils/firebase";
-import {Toast, theme, isPhone} from "../utils/utils";
+import {Toast, isPhone} from "../utils/utils";
+
+import {UserContext} from "../context/userContext";
 
 const Signup = ({navigation}) => {
 
-    const [user, setUser] = useState({
-        Email : "",
-        Name  : "",
-        Password : ""
-    });
+    const {setUser} = useContext(UserContext);
+
+    const [Name, setName] = useState("");
+    const [Email, setEmail] = useState("");
+    const [Password, setPassword] = useState("");
 
     const signUp = () => {
-        if(checkForm()) {
-
-            Auth.createUserWithEmailAndPassword(user.Email, user.Password).then((User) => {
-
-                User.updateProfile({
-                    displayName : user.Name
-                });
-            
-                Toast("Sign up success");
-                navigation.navigate("Signin");
-    
-            }).catch(error => {
-                Toast(error.message);
-            });
-
-        }
-    }
-
-    const checkForm = () => {
-
-        if(user.Email === "" || user.Name === "" || user.Password === "") {
+        
+        if(Email === "" || Name === "" || Password === "") {
             Toast("Please enter all the details.");
             return false;
         }
 
-        return true;
-    };
+        Auth.createUserWithEmailAndPassword(Email, Password).then((userCredentials) => {
+
+            Auth.currentUser.updateProfile({
+                displayName : Name
+            });
+        
+            Toast("Sign up success");
+            setUser(Auth.currentUser);
+
+        }).catch(error => {
+            Toast(error.message);
+        });        
+    }
 
     return (
         <Page style={styles.page}>
@@ -58,9 +54,9 @@ const Signup = ({navigation}) => {
             <ImageBackground source={require("../assets/welcome-img.png")} resizeMode="contain" style={styles.image}></ImageBackground>
 
             <View style={styles.signupWrapper}>
-                <Input label={"Email"}    value={user.Email}    onChange={(text) => setUser({...user, ["Email"]    : text})} />
-                <Input label={"Name"}     value={user.Name}     onChange={(text) => setUser({...user, ["Name"]     : text})} />
-                <Input label={"Password"} value={user.Password} onChange={(text) => setUser({...user, ["Password"] : text})} secureTextEntry={true} />
+                <Input label={"Name"}     value={Name}     onChange={setName}  />
+                <Input label={"Email"}    value={Email}    onChange={setEmail} />
+                <Input label={"Password"} value={Password} onChange={setPassword} secureTextEntry={true} />
 
                 <Button text={"Sign Up"} onPress={signUp} />
 

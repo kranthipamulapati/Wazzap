@@ -3,26 +3,19 @@
  * kranthipamulapati.com
  */
 
-import React, {useEffect, useContext} from "react";
+import React, {useEffect} from "react";
 import {StyleSheet} from "react-native";
 
 import Page from "../components/page/Page";
 import Image from "../components/basic/Image";
 
-import {UserContext} from "../context/userContext";
-
-const Splash = ({navigation}) => {
-
-    const User = useContext(UserContext);
+const Splash = ({route, navigation}) => {
 
     useEffect(() => {
-        if(User) {
-            navigation.navigate("Profile");
-        } else {
-            navigation.navigate("Signin");
-        } 
-    }, [User]);
-
+        console.log(route.params.page);
+        navigation.navigate(route.params.page);
+    }, []);
+    
     return (
         <Page style={styles.center}>
             <Image source={require("../assets/Android/icons8-whatsapp-192.png")} />
