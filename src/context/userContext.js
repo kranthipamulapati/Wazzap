@@ -6,7 +6,7 @@ import useAuthListener from "../hooks/useAuthListener";
 const UserContext = createContext();
 
 const UserProvider = ({children}) => {
-    
+
     const authInfo = useAuthListener();
     const userInfo = useUser(authInfo?.uid);
 

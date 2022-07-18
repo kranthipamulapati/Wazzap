@@ -3,17 +3,13 @@
  * kranthipamulapati.com
  */
 
-import React, {useEffect} from "react";
+import React from "react";
 import {StyleSheet} from "react-native";
 
 import Page from "../components/page/Page";
 import Image from "../components/basic/Image";
 
 const Splash = ({route, navigation}) => {
-
-    useEffect(() => {
-        navigation.navigate(route.params.page);
-    }, []);
     
     return (
         <Page style={styles.center}>
