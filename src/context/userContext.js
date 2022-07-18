@@ -1,22 +1,16 @@
-import React, {useState, useEffect, createContext} from "react";
+import React, {createContext} from "react";
 
-import {Auth} from "../utils/firebase";
+import useUser from "../hooks/useUser";
+import useAuthListener from "../hooks/useAuthListener";
 
 const UserContext = createContext();
 
 const UserProvider = ({children}) => {
     
-    const [user, setUser] = useState(null);
-    const value = {user, setUser};
+    const authInfo = useAuthListener();
+    const userInfo = useUser(authInfo?.uid);
 
-    useEffect(() => {
-
-        const authListener = Auth.onAuthStateChanged((User) => {
-            setUser(User);
-        });
-
-        return authListener;
-    }, []);
+    const value = {authInfo, userInfo};
 
     return <UserContext.Provider value={value}>
         {children}

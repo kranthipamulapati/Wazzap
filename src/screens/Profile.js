@@ -11,22 +11,35 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 
 import Page from "../components/page/Page";
 import Text from "../components/basic/Text";
+import DisplayName from "../components/popups/displayName";
 
 import {theme} from "../themes/default";
 
 import {UserContext} from "../context/userContext";
 
-import DisplayName from "../components/popups/displayName";
-
 import {Toast, isPhone} from "../utils/utils";
-import {Storage, uploadImage} from "../utils/firebase";
+import {Storage, Firestore, uploadImage} from "../utils/firebase";
 
 const Profile = ({navigation}) => {
-    
-    const {user} = useContext(UserContext);
+    const {authInfo, userInfo} = useContext(UserContext);
 
+    const [displayName, setDisplayName] = useState(userInfo.displayName);
     const [showDisplayNameModal, setShowDisplayNameModal] = useState(false);
-    const [profilePicture, setProfilePicture] = useState(user.photoURL || require("../assets/welcome-img.png"));
+
+    const defaultPicture = require("../assets/welcome-img.png");
+    const [profilePicture, setProfilePicture] = useState(userInfo.photoURL.length ? {uri : userInfo.photoURL} : defaultPicture);
+
+    const hideDisplayNameModal = async (flag, text) => {
+        setShowDisplayNameModal(false);
+
+        if(flag === true && text.length > 0) {
+
+            await Firestore.collection("users").doc(userInfo.userId).update({
+                displayName : text,
+            });
+            setDisplayName(text);
+        }
+    };
 
     const changeProfilePicture = () => {
 
@@ -45,22 +58,25 @@ const Profile = ({navigation}) => {
 
                 if(task.state === "success") {
 
-                    Storage.ref(task.fileName).getDownloadURL().then((url) => {
+                    Storage.ref(task.fileName).getDownloadURL().then(async (url) => {
 
-                        setProfilePicture({uri : url});
-
+                        await Firestore.collection("users").doc(userInfo.userId).update({
+                            photoURL : url,
+                        });
+                        
+                        setProfilePicture({uri : response.assets[0].uri});
+                        
                     }).catch((e) => {
 
-                        setProfilePicture({uri : response.assets[0].uri});
-
-                    });
-
-                    Toast("Profile picture updated!");
+                        Toast(e.message);
+                        setProfilePicture(defaultProfilePic);
+                        
+                    });                    
 
                 } else {
 
-                    setProfilePicture(require("../assets/welcome-img.png"));
-                    Toast("Uploading profile picture failed.");
+                    setProfilePicture(defaultProfilePic);
+                    Toast("Profile picture upload failed.");
 
                 } 
             }
@@ -76,22 +92,10 @@ const Profile = ({navigation}) => {
         launchCamera(options, callback);
     };
 
-    const hideDisplayNameModal = (flag, text) => {
-        setShowDisplayNameModal(false);
-
-        if(flag === true && text.length > 0) {
-            
-            user.updateProfile({
-                displayName : text
-            });
-
-        }
-    };
-
     return (
         <Page style={styles.page}>
 
-            {showDisplayNameModal && <DisplayName text={user.displayName} hideDisplayNameModal={hideDisplayNameModal} />}
+            {showDisplayNameModal && <DisplayName text={displayName} hideDisplayNameModal={hideDisplayNameModal} />}
 
             <View style={styles.profilePictureWrapper}>
                 <ImageBackground resizeMode="cover" style={styles.profilePicture} source={profilePicture}/>
@@ -103,13 +107,13 @@ const Profile = ({navigation}) => {
             
             <Pressable style={styles.contentWrapper} onPress={() => setShowDisplayNameModal(true)}>
                 <Icon name={"user-alt"} style={styles.icon} />
-                <Text value={user.displayName} />
+                <Text value={displayName} />
                 <Icon name={"pen"} style={styles.icon} />
             </Pressable>
 
             <Pressable style={styles.contentWrapper}>
                 <Icon name={"envelope"} style={styles.icon} />
-                <Text value={user.email} />
+                <Text value={authInfo.email} />
                 <View></View>
             </Pressable>
 

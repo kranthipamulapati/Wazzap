@@ -11,7 +11,6 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {RootSiblingParent} from "react-native-root-siblings";
 
 import Home from "./src/screens/Home";
-import Splash from "./src/screens/Splash";
 import Signin from "./src/screens/Signin";
 import Signup from "./src/screens/Signup";
 import Profile from "./src/screens/Profile";
@@ -22,7 +21,7 @@ import {UserContext} from "./src/context/userContext";
 
 const App = () => {
     
-    const {user} = useContext(UserContext);
+    const {userInfo} = useContext(UserContext);
     const Stack = createNativeStackNavigator();
 
     const screenOptions = {
@@ -37,9 +36,9 @@ const App = () => {
         <RootSiblingParent>
             <NavigationContainer>
                 
-                <Stack.Navigator initialRouteName={user ? "Signin" : "Home"} screenOptions={screenOptions}>
+                <Stack.Navigator initialRouteName={userInfo ? "Signin" : "Profile"} screenOptions={screenOptions}>
                     
-                    {user === null ? <>
+                    {userInfo === null ? <>
                         <Stack.Screen name="Signin" component={Signin} options={{headerShown : false}} />
                         <Stack.Screen name="Signup" component={Signup} options={{headerShown : false}} />
                     </> : <>

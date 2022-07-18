@@ -12,7 +12,6 @@ import Image from "../components/basic/Image";
 const Splash = ({route, navigation}) => {
 
     useEffect(() => {
-        console.log(route.params.page);
         navigation.navigate(route.params.page);
     }, []);
     

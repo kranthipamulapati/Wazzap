@@ -3,7 +3,7 @@
  * kranthipamulapati.com
  */
 
-import React, {useState, useContext} from "react";
+import React, {useState} from "react";
 import {View, Pressable, StyleSheet, ImageBackground} from "react-native";
 
 import Page from "../components/page/Page";
@@ -13,14 +13,10 @@ import Button from "../components/basic/Button";
 
 import {theme} from "../themes/default";
 
-import {Auth} from "../utils/firebase";
+import {Auth, Firestore} from "../utils/firebase";
 import {Toast, isPhone} from "../utils/utils";
 
-import {UserContext} from "../context/userContext";
-
 const Signup = ({navigation}) => {
-
-    const {setUser} = useContext(UserContext);
 
     const [Name, setName] = useState("");
     const [Email, setEmail] = useState("");
@@ -33,14 +29,15 @@ const Signup = ({navigation}) => {
             return false;
         }
 
-        Auth.createUserWithEmailAndPassword(Email, Password).then((userCredentials) => {
+        Auth.createUserWithEmailAndPassword(Email, Password).then(async (userCredentials) => {
 
-            Auth.currentUser.updateProfile({
-                displayName : Name
+            await Firestore.collection("users").doc(userCredentials.user.uid).set({
+                userId : userCredentials.user.uid,
+                displayName : Name,
+                photoURL : ""
             });
-        
+
             Toast("Sign up success");
-            setUser(Auth.currentUser);
 
         }).catch(error => {
             Toast(error.message);

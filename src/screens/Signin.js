@@ -3,7 +3,7 @@
  * kranthipamulapati.com
  */
 
-import React, {useState, useContext} from "react";
+import React, {useState} from "react";
 import {View, Pressable, StyleSheet, ImageBackground} from "react-native";
 
 import Page from "../components/page/Page";
@@ -16,11 +16,7 @@ import {theme} from "../themes/default";
 import {Auth} from "../utils/firebase";
 import {Toast, isPhone} from "../utils/utils";
 
-import {UserContext} from "../context/userContext";
-
 const Signin = ({navigation}) => {
-
-    const {setUser} = useContext(UserContext);
 
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
@@ -29,9 +25,7 @@ const Signin = ({navigation}) => {
         if(Email.length === 0 || Password.length === 0) return false;
 
         Auth.signInWithEmailAndPassword(Email, Password).then((userCredentials) => {
-
-            setUser(Auth.currentUser);
-
+            Toast("Sign in success.");
         }).catch(error => {
             Toast(error.message);
         });
