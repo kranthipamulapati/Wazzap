@@ -14,6 +14,7 @@ import Home from "./src/screens/Home";
 import Splash from "./src/screens/Splash";
 import Signin from "./src/screens/Signin";
 import Signup from "./src/screens/Signup";
+import Contacts from "./src/screens/Contacts";
 
 import {theme} from "./src/themes/default";
 
@@ -34,20 +35,19 @@ const App = () => {
 
     function returnScreens() {
 
-        if(authInfo === false) {
+        if(authInfo === null) {
+            return <>
+                <Stack.Screen name="Signin" component={Signin} options={{headerShown : false}} />
+                <Stack.Screen name="Signup" component={Signup} options={{headerShown : false}} />
+            </>  
+        } else if(authInfo === false || [null, false].includes(userInfo)) {
             return <Stack.Screen name="Splash" component={Splash} options={{headerShown : false}} />
-        } else {
-            if(authInfo === null) {
-                return <>
-                    <Stack.Screen name="Signin" component={Signin} options={{headerShown : false}} />
-                    <Stack.Screen name="Signup" component={Signup} options={{headerShown : false}} />
-                </>
-            } else if([null, false].includes(userInfo)) {
-                return <Stack.Screen name="Splash" component={Splash} options={{headerShown : false}} />
-            } else {
-                return <Stack.Screen name="Home"   component={Home}   options={{title : "Wazzap", headerBackVisible : false}} />
-            }
         }
+        
+        return <>
+            <Stack.Screen name="Home"     component={Home}     options={{title : "Wazzap", headerBackVisible : false}} />
+            <Stack.Screen name="Contacts" component={Contacts} options={{title : "Select Contact", headerBackVisible : false}} />
+        </> 
     }
 
     return (
