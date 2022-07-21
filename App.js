@@ -11,6 +11,7 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {RootSiblingParent} from "react-native-root-siblings";
 
 import Home from "./src/screens/Home";
+import Chat from "./src/screens/Chat";
 import Splash from "./src/screens/Splash";
 import Signin from "./src/screens/Signin";
 import Signup from "./src/screens/Signup";
@@ -46,6 +47,7 @@ const App = () => {
         
         return <>
             <Stack.Screen name="Home"     component={Home}     options={{title : "Wazzap", headerBackVisible : false}} />
+            <Stack.Screen name="Chat"     component={Chat}     options={{title : "Select Contact", headerBackVisible : false}} />
             <Stack.Screen name="Contacts" component={Contacts} options={{title : "Select Contact", headerBackVisible : false}} />
         </> 
     }
