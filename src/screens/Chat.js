@@ -4,11 +4,7 @@
  */
 
 import React, {useState, useEffect, useContext} from "react";
-import {Pressable, StyleSheet} from "react-native";
-
-import Icon from "react-native-vector-icons/FontAwesome5";
-
-import {theme} from "../themes/default";
+import {StyleSheet} from "react-native"; 
 
 import Page from "../components/page/Page";
 
@@ -16,25 +12,26 @@ import {Firestore} from "../utils/firebase";
 
 import {UserContext} from "../context/userContext";
 
-const Chat = ({navigation}) => {
-
-    const {authInfo, userInfo} = useContext(UserContext);
-
+const Chat = ({route, navigation}) => {
+    const contact = route.params.contact;
+    
     const [chat, setChat] = useState({});
+    const {authInfo, userInfo} = useContext(UserContext);
 
     useEffect(() => {
 
         async function getChat() {
-            let chat = [], results = await Firestore.collection("chats").where("participants", "array-contains", authInfo.uid).get();
+            let rooms = [], results = await Firestore.collection("chats").where("participants", "array-contains-any", [authInfo.uid, contact.docId]).get();
             
             results.forEach((chat) => rooms.push({
                 ...chat.data(),
                 docId : chat.id
             }));
-            setChat(rooms);
+            setChat(rooms[0]);
         }
 
         getChat();
+        navigation.setOptions({title : contact.displayName});
     }, []);
     
     return (

@@ -1,18 +1,16 @@
 import {useState, useEffect} from "react";
 
-import {Toast, getPermission} from "../utils/utils";
-
 import {PERMISSIONS} from "react-native-permissions";
+import {default as DeviceContacts} from "react-native-contacts";
 
 import {Firestore} from "../utils/firebase";
 
-import {default as DeviceContacts} from "react-native-contacts";
+import {Toast, getPermission} from "../utils/utils";
 
 export default function useContacts() {
     const [contacts, setContacts] = useState([]);
     
     useEffect(() => {
-        
         async function getContacts() {
             
             try {

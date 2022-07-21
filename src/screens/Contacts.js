@@ -4,9 +4,10 @@
  */
 
 import React, {useContext} from "react";
-import {Text, FlatList, Pressable, StyleSheet} from "react-native";
+import {FlatList} from "react-native";
 
 import Page from "../components/page/Page";
+import ContactCard from "../components/ContactCard";
 
 import useContacts from "../hooks/useContacts";
 
@@ -18,9 +19,7 @@ const Contacts = ({navigation}) => {
     const contacts = useContacts(authInfo.uid);
 
     function renderItem({item}) {
-        return <Pressable style={styles.item} onPress={() => navigation.navigate("Chat", item)}>
-            <Text style={styles.title}>{item.displayName}</Text>
-        </Pressable>
+        return <ContactCard contact={item} onPress={() => navigation.navigate("Chat", {contact : item})} />
     }
     
     return (
@@ -29,19 +28,5 @@ const Contacts = ({navigation}) => {
         </Page>
     );
 };
-
-const styles = StyleSheet.create({
-    item : {
-        height : 80,
-        borderColor: "gray",
-        borderWidth : 1,
-        padding: 20,
-        marginVertical: 8,
-        marginHorizontal: 16,
-    },
-    title : {
-        fontSize: 32,
-    }
-});
 
 export default Contacts;
