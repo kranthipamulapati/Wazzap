@@ -9,6 +9,7 @@ import {View, Pressable, StyleSheet, ImageBackground} from "react-native";
 import Page from "../components/page/Page";
 import Text from "../components/basic/Text";
 import Input from "../components/basic/Input";
+import Title from "../components/basic/Title";
 import Button from "../components/basic/Button";
 
 import {theme} from "../themes/default";
@@ -33,7 +34,7 @@ const Signin = ({navigation}) => {
 
     return (
         <Page style={styles.page}>
-            <Text style={styles.title} value={"Welcome to Wazzap"}/>
+            <Title style={styles.title} value={"Welcome to Wazzap"} />
 
             <ImageBackground source={require("../assets/welcome-img.png")} resizeMode="contain" style={styles.image}></ImageBackground>
 
