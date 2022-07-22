@@ -4,7 +4,6 @@ import {PERMISSIONS} from "react-native-permissions";
 import {default as DeviceContacts} from "react-native-contacts";
 
 import {Firestore} from "../utils/firebase";
-
 import {Toast, getPermission} from "../utils/utils";
 
 export default function useContacts() {
@@ -15,7 +14,8 @@ export default function useContacts() {
             
             try {
 
-                let deviceContacts = await DeviceContacts.getAll();
+                let wazzapContacts = [], 
+                    deviceContacts = await DeviceContacts.getAll();
 
                 let emails = deviceContacts
                     .filter((deviceContact) => deviceContact.emailAddresses.length > 0)
@@ -23,7 +23,6 @@ export default function useContacts() {
             
                 let results = await Firestore.collection("users").where("emailAddress", "in", emails).get();
 
-                let wazzapContacts = [];
                 results.forEach(result => wazzapContacts.push({
                     ...result.data(),
                     docId : result.id

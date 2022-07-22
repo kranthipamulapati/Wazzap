@@ -5,13 +5,15 @@ import Text from "./basic/Text";
 
 import {userIcon} from "../utils/assets";
 
-function ContactCard({contact, onPress}) {
+function ChatCard({onPress, contactId, lastMessage}) {
 
-    const profilePicture = contact.photoURL.length ? {uri : contact.photoURL} : userIcon;
+    const contact = {};
 
-    return <Pressable style={styles.contact} onPress={onPress}>
-        <Image style={styles.tinyLogo} source={profilePicture} />
-        <Text value={contact.displayName} />
+    return <Pressable style={styles.contact} onPress={onPress} >
+
+        {/* <Image style={styles.tinyLogo} source={profilePicture} /> */}
+        <Text value={contact?.displayName} />
+        
     </Pressable>
 }
 
@@ -28,8 +30,10 @@ const styles = StyleSheet.create({
         padding: 5,
         marginVertical: 5,
         marginHorizontal: 15,
-        alignItems : "center"
+        alignItems : "center",
+        borderWidth : 1,
+        borderColor : "gray"
     }
 });
 
-export default ContactCard;
+export default ChatCard;

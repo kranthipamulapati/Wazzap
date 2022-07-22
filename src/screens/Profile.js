@@ -9,7 +9,7 @@ import {View, StyleSheet, Pressable, ImageBackground} from "react-native";
 import {launchCamera} from "react-native-image-picker";
 import Icon from "react-native-vector-icons/FontAwesome5";
 
-import Page from "../components/page/Page";
+import Page from "../components/basic/Page";
 import Text from "../components/basic/Text";
 import DisplayName from "../components/popups/displayName";
 
@@ -17,6 +17,7 @@ import {theme} from "../themes/default";
 
 import {UserContext} from "../context/userContext";
 
+import {userIcon} from "../utils/assets";
 import {Toast, isPhone} from "../utils/utils";
 import {Storage, Firestore, uploadImage} from "../utils/firebase";
 
@@ -26,8 +27,7 @@ const Profile = ({navigation}) => {
     const [displayName, setDisplayName] = useState(userInfo.displayName);
     const [showDisplayNameModal, setShowDisplayNameModal] = useState(false);
 
-    const defaultPicture = require("../assets/welcome-img.png");
-    const [profilePicture, setProfilePicture] = useState(userInfo.photoURL.length ? {uri : userInfo.photoURL} : defaultPicture);
+    const [profilePicture, setProfilePicture] = useState(userInfo.photoURL.length ? {uri : userInfo.photoURL} : userIcon);
 
     const hideDisplayNameModal = async (flag, text) => {
         setShowDisplayNameModal(false);

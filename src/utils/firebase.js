@@ -21,3 +21,12 @@ export async function uploadImage(uri, path) {
         return {state : "failed", fileName};
     }
 };
+
+export async function getUserByUserId(userId) {
+    let user = null;
+    
+    let results = await Firestore.collection("users").where("userId", "==", userId).get();
+    results.forEach((User) => User.data());
+
+    return user;
+};

@@ -4,19 +4,20 @@
  */
 
 import React from "react";
-import {View, StyleSheet, Pressable, ImageBackground} from "react-native";
+import {View, Pressable, StyleSheet, ImageBackground} from "react-native";
 
 import Icon from "react-native-vector-icons/FontAwesome5";
 
-import Page from "../components/page/Page";
+import Page from "../components/basic/Page";
 import Text from "../components/basic/Text";
 
 import {isPhone} from "../utils/utils";
+import {userIcon} from "../utils/assets";
 
 const Profile = ({route, navigation}) => {
 
     const contact = route.params.contact;
-    const profilePicture = contact.photoURL.length ? {uri : contact.photoURL} : require("../assets/welcome-img.png");
+    const profilePicture = contact.photoURL.length ? {uri : contact.photoURL} : userIcon;
 
     return (
         <Page style={styles.page}>

@@ -6,7 +6,7 @@
 import React, {useState} from "react";
 import {View, Pressable, StyleSheet, ImageBackground} from "react-native";
 
-import Page from "../components/page/Page";
+import Page from "../components/basic/Page";
 import Text from "../components/basic/Text";
 import Input from "../components/basic/Input";
 import Title from "../components/basic/Title";
@@ -15,6 +15,7 @@ import Button from "../components/basic/Button";
 import {theme} from "../themes/default";
 
 import {Auth} from "../utils/firebase";
+import {welcomeImage} from "../utils/assets";
 import {Toast, isPhone} from "../utils/utils";
 
 const Signin = ({navigation}) => {
@@ -36,7 +37,7 @@ const Signin = ({navigation}) => {
         <Page style={styles.page}>
             <Title style={styles.title} value={"Welcome to Wazzap"} />
 
-            <ImageBackground source={require("../assets/welcome-img.png")} resizeMode="contain" style={styles.image}></ImageBackground>
+            <ImageBackground source={welcomeImage} resizeMode="contain" style={styles.image}></ImageBackground>
 
             <View style={styles.signinWrapper}>
                 <Input style={styles.input} label={"Email"}    value={Email}    onChange={setEmail} />

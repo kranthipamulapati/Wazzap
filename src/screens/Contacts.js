@@ -6,7 +6,7 @@
 import React, {useContext} from "react";
 import {FlatList} from "react-native";
 
-import Page from "../components/page/Page";
+import Page from "../components/basic/Page";
 import ContactCard from "../components/ContactCard";
 
 import useContacts from "../hooks/useContacts";

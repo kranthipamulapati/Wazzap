@@ -6,10 +6,10 @@
 import React from "react";
 import {StyleSheet} from "react-native";
 
-import Page from "../components/page/Page";
+import Page from "../components/basic/Page";
 import Image from "../components/basic/Image";
 
-const Splash = ({route, navigation}) => {
+const Splash = () => {
     
     return (
         <Page style={styles.center}>

@@ -5,17 +5,21 @@ import {useRoute, useNavigation} from "@react-navigation/native";
 
 import Text from "./basic/Text";
 
+import {userIcon} from "../utils/assets";
+
 function ContactCard() {
 
-    const route = useRoute();
-    const navigation = useNavigation();
+    const route = useRoute(),
+        navigation = useNavigation();
 
-    const {contact} = route.params;
-    const profilePicture = contact.photoURL.length ? {uri : contact.photoURL} : require("../assets/welcome-img.png");
+    const {contact} = route.params,
+        profilePicture = contact.photoURL.length ? {uri : contact.photoURL} : userIcon;
 
-    return <Pressable style={styles.contact} onPress={() => navigation.navigate("Contact", {contact})}>
+    return <Pressable style={styles.contact} onPress={() => navigation.navigate("Contact", {contact})} >
+
         <Image style={styles.tinyLogo} source={profilePicture} />
         <Text value={contact.displayName} />
+        
     </Pressable>
 }
 
