@@ -11,7 +11,7 @@ import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs
 
 import Chats from "./Chats";
 import Profile from "./Profile";
-import { theme } from "../themes/default";
+import { theme } from "../utils/themes";
 
 const Home = ({navigation}) => {
 
@@ -30,8 +30,8 @@ const Home = ({navigation}) => {
   
                 return <Icon name={iconName} size={16} color={theme.colors.primary} />;
             },
-            tabBarActiveTintColor: 'tomato',
-            tabBarInactiveTintColor: 'gray',
+            tabBarActiveTintColor: "tomato",
+            tabBarInactiveTintColor: "gray",
           }}}
         >
             <Tab.Screen name="Chats" component={Chats} />

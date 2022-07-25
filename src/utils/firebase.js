@@ -26,7 +26,12 @@ export async function getUserByUserId(userId) {
     let user = null;
     
     let results = await Firestore.collection("users").where("userId", "==", userId).get();
-    results.forEach((User) => User.data());
-
+    results.forEach((User) => {
+        user = {
+            ...User.data(),
+            docId : User.id
+        } 
+    });
+    
     return user;
 };

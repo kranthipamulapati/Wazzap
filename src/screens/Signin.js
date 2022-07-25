@@ -12,7 +12,7 @@ import Input from "../components/basic/Input";
 import Title from "../components/basic/Title";
 import Button from "../components/basic/Button";
 
-import {theme} from "../themes/default";
+import {theme} from "../utils/themes";
 
 import {Auth} from "../utils/firebase";
 import {welcomeImage} from "../utils/assets";

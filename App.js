@@ -11,18 +11,16 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {RootSiblingParent} from "react-native-root-siblings";
 
 import Home from "./src/screens/Home";
-
+import Chat from "./src/screens/Chat";
 import Splash from "./src/screens/Splash";
 import Signin from "./src/screens/Signin";
 import Signup from "./src/screens/Signup";
-
 import Contact from "./src/screens/Contact";
 import Contacts from "./src/screens/Contacts";
 
-import Chat from "./src/screens/Chat";
 import ChatHeader from "./src/components/ChatHeader";
 
-import {theme} from "./src/themes/default";
+import {theme} from "./src/utils/themes";
 
 import {UserContext} from "./src/context/userContext";
 

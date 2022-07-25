@@ -7,7 +7,7 @@ import Text from "./basic/Text";
 
 import {userIcon} from "../utils/assets";
 
-function ContactCard() {
+function ChatHeader() {
 
     const route = useRoute(),
         navigation = useNavigation();
@@ -40,4 +40,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ContactCard;
+export default ChatHeader;

@@ -11,7 +11,7 @@ import Text from "../components/basic/Text";
 import Input from "../components/basic/Input";
 import Button from "../components/basic/Button";
 
-import {theme} from "../themes/default";
+import {theme} from "../utils/themes";
 
 import {welcomeImage} from "../utils/assets";
 import {Toast, isPhone} from "../utils/utils";

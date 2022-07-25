@@ -4,16 +4,14 @@
  */
 
 import React, {useState, useEffect, useContext} from "react";
-import {View, Pressable, StyleSheet} from "react-native";
+import {Pressable, StyleSheet} from "react-native";
 
 import Icon from "react-native-vector-icons/FontAwesome5";
 
 import Page from "../components/basic/Page";
-
 import ChatCard from "../components/ChatCard";
 
-import {theme} from "../themes/default";
-
+import {theme} from "../utils/themes";
 import {Firestore} from "../utils/firebase";
 
 import {UserContext} from "../context/userContext";
@@ -45,9 +43,13 @@ const Chats = ({navigation}) => {
                 <Icon style={styles.contactIcon} name={"address-book"} />
             </Pressable>
 
-            {chats.map((chat) => 
-                <ChatCard key={chat.docId} onPress={() => navigation.navigate("Chat", {contact : chat.participants})} contactId={chat.participants} lastMessage={chat.lastMessage} />
-            )}
+            {chats.map((chat) => {
+
+                let contactId = chat.participants.filter((cid) => cid !== authInfo.uid)[0];
+                return <ChatCard key={chat.docId} lastMessage={chat.lastMessage} contactId={contactId} />
+                
+            })}
+            
         </Page>
     );
 };

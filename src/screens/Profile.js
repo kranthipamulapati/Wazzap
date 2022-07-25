@@ -13,7 +13,7 @@ import Page from "../components/basic/Page";
 import Text from "../components/basic/Text";
 import DisplayName from "../components/popups/displayName";
 
-import {theme} from "../themes/default";
+import {theme} from "../utils/themes";
 
 import {UserContext} from "../context/userContext";
 

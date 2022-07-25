@@ -22,7 +22,7 @@ import {StyleSheet} from "react-native";
 
 import {TextInput} from "react-native-paper";
 
-import {theme} from "../../themes/default";
+import {theme} from "../../utils/themes";
 
 const Input = ({
         leftNode, 

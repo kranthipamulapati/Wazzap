@@ -1,18 +1,46 @@
-import React from "react";
-import {Image, Pressable, StyleSheet} from "react-native";
+import React, {useState, useEffect} from "react";
+import {View, Image, Pressable, StyleSheet} from "react-native";
+
+import {useNavigation} from "@react-navigation/native";
 
 import Text from "./basic/Text";
 
 import {userIcon} from "../utils/assets";
+import {getUserByUserId} from "../utils/firebase";
 
-function ChatCard({onPress, contactId, lastMessage}) {
+function ChatCard({contactId, lastMessage}) {
+    const navigation = useNavigation();
 
-    const contact = {};
+    const [contact, setContact] = useState({
+        photoURL : "",
+        displayName : "",
+    });
+    const [profilePicture, setprofilePicture] = useState(userIcon);
 
-    return <Pressable style={styles.contact} onPress={onPress} >
+    useEffect(() => {
 
-        {/* <Image style={styles.tinyLogo} source={profilePicture} /> */}
-        <Text value={contact?.displayName} />
+        async function getContact() {
+            let result = await getUserByUserId(contactId);
+            setContact(result);
+        }
+
+        getContact();
+    }, []);
+
+    useEffect(() => {
+        if(contact.photoURL) {
+            setprofilePicture({uri : contact.photoURL});
+        }
+    }, [contact]);
+
+    return <Pressable style={styles.contact} onPress={() => navigation.navigate("Chat", {contact : contact})} >
+
+        <Image style={styles.tinyLogo} source={profilePicture} />
+
+        <View style={{flexDirection : "column"}}>
+            <Text style={{fontWeight : "bold"}} value={contact.displayName} />
+            <Text style={{fontSize : 12}} value={lastMessage} />
+        </View>
         
     </Pressable>
 }
