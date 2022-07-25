@@ -6,7 +6,6 @@
 import React, {useState, useContext} from "react";
 import {View, StyleSheet, Pressable, ImageBackground} from "react-native";
 
-import {launchCamera} from "react-native-image-picker";
 import Icon from "react-native-vector-icons/FontAwesome5";
 
 import Page from "../components/basic/Page";
@@ -18,7 +17,7 @@ import {theme} from "../utils/themes";
 import {UserContext} from "../context/userContext";
 
 import {userIcon} from "../utils/assets";
-import {Toast, isPhone} from "../utils/utils";
+import {Toast, isPhone, takePicture} from "../utils/utils";
 import {Storage, Firestore, uploadImage} from "../utils/firebase";
 
 const Profile = ({navigation}) => {
@@ -41,55 +40,40 @@ const Profile = ({navigation}) => {
         }
     };
 
-    const changeProfilePicture = () => {
+    const changeProfilePicture = async () => {
+        let result = await takePicture();
 
-        async function callback(response) {
+        if(result.error) {
 
-            if(response.didCancel) {
+            Toast(result.errorMessage);
 
-                Toast("Cancelled by user.");
+        } else {
+            let task = await uploadImage(result.uri, "images/profilepictures");
 
-            } else if(response.errorCode) {
+            if(task.state === "success") {
 
-                Toast(response.errorMessage);
+                Storage.ref(task.fileName).getDownloadURL().then(async (url) => {
+
+                    await Firestore.collection("users").doc(userInfo.userId).update({
+                        photoURL : url
+                    });
+                    
+                    setProfilePicture({uri : response.assets[0].uri});
+                    
+                }).catch((e) => {
+
+                    Toast(e.message);
+                    setProfilePicture(defaultProfilePic);
+                    
+                });                    
 
             } else {
-                let task = await uploadImage(response.assets[0].uri, "images/profilepictures");
 
-                if(task.state === "success") {
+                setProfilePicture(defaultProfilePic);
+                Toast("Profile picture upload failed.");
 
-                    Storage.ref(task.fileName).getDownloadURL().then(async (url) => {
-
-                        await Firestore.collection("users").doc(userInfo.userId).update({
-                            photoURL : url,
-                        });
-                        
-                        setProfilePicture({uri : response.assets[0].uri});
-                        
-                    }).catch((e) => {
-
-                        Toast(e.message);
-                        setProfilePicture(defaultProfilePic);
-                        
-                    });                    
-
-                } else {
-
-                    setProfilePicture(defaultProfilePic);
-                    Toast("Profile picture upload failed.");
-
-                } 
-            }
+            } 
         }
-
-        let options = {
-            includeBase64 : true,
-            saveToPhotos  : true,
-            mediaType     : "photo",
-            quality       : 1
-        };
-
-        launchCamera(options, callback);
     };
 
     return (

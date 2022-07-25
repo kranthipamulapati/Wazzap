@@ -11,7 +11,7 @@ export default function useUser(uid) {
             let results = await Firestore.collection("users").where("userId", "==", uid).get();
 
             if(results.size) {
-                results.forEach((User) => setUser(User.data()));
+                results.forEach((User) => setUser({...User.data(), docId : User.id}));
             } else {
                 setUser(null);
             }

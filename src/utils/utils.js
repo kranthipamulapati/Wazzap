@@ -6,6 +6,8 @@ import {default as toast} from "react-native-root-toast";
 
 import {request} from "react-native-permissions";
 
+import {launchCamera} from "react-native-image-picker";
+
 export const isPhone = !isTablet();
 export const {width, height} = Dimensions.get("window");
 
@@ -35,4 +37,39 @@ export const getPermission = async (permission) => {
 
     }
     
-}
+};
+
+export const takePicture = async () => {
+
+    let obj = {
+        uri : "",
+        error : true,
+        errorMessage : ""
+    };
+
+    let options = {
+        includeBase64 : false,
+        saveToPhotos  : false,
+        mediaType     : "photo",
+        quality       : 1
+    };
+
+    try {
+        const response = await launchCamera(options);
+
+        if(response.didCancel) {
+            obj.errorMessage = "Cancelled by user.";
+        } else if(response.errorCode) {
+            obj.errorMessage = response.errorMessage;
+        } else {
+            obj.error = false;
+            obj.uri = response.assets[0].uri;
+        }
+
+        return obj;
+    } catch (err) {
+        obj.errorMessage = err.message;
+        return obj;
+    }
+    
+};

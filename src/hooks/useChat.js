@@ -3,8 +3,12 @@ import {useState, useEffect} from "react";
 import {Toast} from "../utils/utils";
 import {Firestore} from "../utils/firebase";
 
-export default function useChat(userId, contactId) {
-    const [chat, setChat] = useState(null);
+export default function useChat(user, contact) {
+    const [chat, setChat] = useState({
+        messages: [],
+        participants : [],
+        lastMessage : ""
+    });
     
     useEffect(() => {
         let room = {};
@@ -14,8 +18,9 @@ export default function useChat(userId, contactId) {
             try {
                 
                 let result = await Firestore.collection("chats").add({
-                    participants : [userId, contactId],
-                    lastMessage : ""
+                    participants : [user.docId, contact.docId],
+                    lastMessage : -1,
+                    messages : []
                 });
     
                 room = await result.get();
@@ -35,7 +40,7 @@ export default function useChat(userId, contactId) {
 
             try {
                 
-                let results = await Firestore.collection("chats").where("participants", "array-contains-any", [userId, contactId]).get();
+                let results = await Firestore.collection("chats").where("participants", "array-contains-any", [user.docId, contact.docId]).get();
                 if(results.size === 0) {
 
                     createChat();
@@ -46,7 +51,8 @@ export default function useChat(userId, contactId) {
                         ...chat.data(),
                         docId : chat.id
                     });
-                    setChat(room);                    
+                    setChat(room);
+
                 } 
         
             } catch(e) {

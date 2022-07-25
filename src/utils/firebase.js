@@ -7,6 +7,7 @@ import {Toast} from "./utils";
 export const Auth = auth();
 export const Storage = storage();
 export const Firestore = firestore();
+export const {arrayUnion} = firestore.FieldValue;
 
 export async function uploadImage(uri, path) {
     
